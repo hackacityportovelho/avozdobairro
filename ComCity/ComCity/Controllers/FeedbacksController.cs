@@ -146,5 +146,12 @@ namespace ComCity.Controllers
         {
             return _context.Feedbacks.Any(e => e.Id == id);
         }
+
+        public IActionResult EmitirRelatorio()
+        {
+            var respostas = _context.Feedbacks.ToList();
+            return View(respostas);
+        }
+
     }
 }

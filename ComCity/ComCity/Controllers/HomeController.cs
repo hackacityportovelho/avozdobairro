@@ -36,12 +36,6 @@ namespace ComCity.Controllers
             return View(projetos);
         }
 
-        [Authorize]
-        public IActionResult Admin()
-        {
-            return View(db.Projetos.Take(5).ToList());
-        }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
