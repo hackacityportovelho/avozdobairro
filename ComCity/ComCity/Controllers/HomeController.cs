@@ -36,7 +36,7 @@ namespace ComCity.Controllers
         [Authorize]
         public IActionResult Admin()
         {
-            return View();
+            return View(db.Projetos.Take(5).ToList());
         }
 
         public IActionResult Error()
