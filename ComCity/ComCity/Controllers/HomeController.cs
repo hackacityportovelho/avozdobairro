@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ComCity.Models;
 using ComCity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ComCity.Controllers
@@ -34,14 +36,32 @@ namespace ComCity.Controllers
             return View(projetos);
         }
 
+        [Authorize]
         public IActionResult Admin()
         {
-            return RedirectToAction("Login","Account");
+            return View(db.Projetos.Take(5).ToList());
         }
 
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> ListarEnquetes(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var projeto = await db.Projetos.Include(t => t.Enquetes)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (projeto == null)
+            {
+                return NotFound();
+            }
+
+            return View(projeto);
         }
     }
 }

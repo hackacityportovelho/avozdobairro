@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,22 +8,21 @@ using ComCity.Models;
 
 namespace ComCity.Controllers
 {
-    public class EnquetesController : Controller
+    public class EnqueteController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EnquetesController(ApplicationDbContext context)
+        public EnqueteController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Enquetes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Enquetes.ToListAsync());
+            var applicationDbContext = _context.Enquetes.Include(e => e.Projeto);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Enquetes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,6 +31,7 @@ namespace ComCity.Controllers
             }
 
             var enquete = await _context.Enquetes
+                .Include(e => e.Projeto)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (enquete == null)
             {
@@ -43,18 +41,15 @@ namespace ComCity.Controllers
             return View(enquete);
         }
 
-        // GET: Enquetes/Create
         public IActionResult Create()
         {
+            ViewData["ProjetoId"] = new SelectList(_context.Projetos, "Id", "Id");
             return View();
         }
 
-        // POST: Enquetes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descricao")] Enquete enquete)
+        public async Task<IActionResult> Create([Bind("ProjetoId,Descricao")] Enquete enquete)
         {
             if (ModelState.IsValid)
             {
@@ -62,10 +57,10 @@ namespace ComCity.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProjetoId"] = new SelectList(_context.Projetos, "Id", "Id", enquete.ProjetoId);
             return View(enquete);
         }
 
-        // GET: Enquetes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,15 +73,14 @@ namespace ComCity.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProjetoId"] = new SelectList(_context.Projetos, "Id", "Id", enquete.ProjetoId);
             return View(enquete);
         }
 
-        // POST: Enquetes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Descricao")] Enquete enquete)
+        public async Task<IActionResult> Edit(int id, [Bind("ProjetoId,Descricao")] Enquete enquete)
         {
             if (id != enquete.Id)
             {
@@ -113,10 +107,10 @@ namespace ComCity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProjetoId"] = new SelectList(_context.Projetos, "Id", "Id", enquete.ProjetoId);
             return View(enquete);
         }
 
-        // GET: Enquetes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +119,7 @@ namespace ComCity.Controllers
             }
 
             var enquete = await _context.Enquetes
+                .Include(e => e.Projeto)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (enquete == null)
             {
@@ -134,9 +129,7 @@ namespace ComCity.Controllers
             return View(enquete);
         }
 
-        // POST: Enquetes/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var enquete = await _context.Enquetes.SingleOrDefaultAsync(m => m.Id == id);
