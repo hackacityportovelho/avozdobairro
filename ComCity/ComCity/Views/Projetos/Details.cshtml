@@ -6,86 +6,92 @@
 
 <h2>Detalhes</h2>
 
-<div>
-    <h4>Projeto</h4>
+@if(User.Identity.IsAuthenticated)
+{
+    <a asp-action="Create" asp-controller="Enquetes" asp-route-ProjetoId="@Model.Id"> Criar Enquete </a>
+}
+
+<h4>Projeto</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Valor)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Valor)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PrevisaoDeInicio)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PrevisaoDeInicio)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PrevisaoDeConclusao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PrevisaoDeConclusao)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CEP)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CEP)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Numero)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Numero)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Rua)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Rua)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Bairro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Bairro)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Cidade)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Cidade)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Situacao)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Situacao)
-        </dd>
-    </dl>
-    
-        <img style="width:400px;" src="@Model.UrlImagem">
-    
+<div class="row">
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Valor)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Valor)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PrevisaoDeInicio)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PrevisaoDeInicio)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PrevisaoDeConclusao)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PrevisaoDeConclusao)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CEP)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CEP)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Numero)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Numero)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Rua)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Rua)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Bairro)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Bairro)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Cidade)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Cidade)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Estado)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Estado)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Situacao)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Situacao)
+            </dd>
+        </dl>        
+         <img src="@Model.UrlImagem" class="imagem-painel">
+    </div>
+        
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |

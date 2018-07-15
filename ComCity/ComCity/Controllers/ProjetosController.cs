@@ -33,11 +33,12 @@ namespace ComCity.Controllers
             }
 
             var projeto = await _context.Projetos
+                .Include(a => a.Enquetes)
+                    .ThenInclude(a=>a.Feedbacks)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (projeto == null)
-            {
-                return NotFound();
-            }
+
+            if (projeto == null)            
+                return NotFound();            
 
             return View(projeto);
         }
