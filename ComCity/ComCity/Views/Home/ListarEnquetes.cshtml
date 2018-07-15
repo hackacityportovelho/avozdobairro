@@ -94,8 +94,10 @@
             {
                 <p>
                     @item.Descricao
-                    <a asp-action="Sim" asp-controller="Feedbacks" asp-route-EnqueteId="@item.Id"> Sim </a>
-                    <a asp-action="Nao" asp-controller="Feedbacks" asp-route-EnqueteId="@item.Id"> Não </a>
+                    </p>
+                <p>                        
+                    <a class="btn btn-primary" asp-action="Sim" asp-controller="Feedbacks" asp-route-EnqueteId="@item.Id"> Sim </a>
+                    <a class="btn btn-danger" asp-action="Nao" asp-controller="Feedbacks" asp-route-EnqueteId="@item.Id"> Não </a>
                 </p>
 
             }
