@@ -10,32 +10,32 @@ namespace ComCity.Models
         [ScaffoldColumn(false)]
         public int Id { get; set; }
         
-        [DisplayName("¡rea")]
+        [DisplayName("√Årea")]
         public int AreaId { get; set; }
 
         [DisplayName("Nome do Projeto")]
         public string Nome { get; set; }
 
-        [DisplayName("DescriÁ„o")]
+        [DisplayName("Descri√ß√£o")]
         public string Descricao { get; set; }
         
-        public decimal Valor { get; set; }
+        public decimal? Valor { get; set; }
 
-        [DisplayName("Previs„o De Inicio"), DataType(DataType.Date)]
+        [DisplayName("Previs√£o De Inicio"), DataType(DataType.Date)]
         public DateTime? PrevisaoDeInicio { get; set; }
 
-        [DisplayName("Previs„o De FConclus„o"), DataType(DataType.Date)]
+        [DisplayName("Previs√£o De Conclus√£o"), DataType(DataType.Date)]
         public DateTime? PrevisaoDeConclusao { get; set; }
 
         [DisplayName("Cep")]
         public string CEP { get; set; }
 
-        [DisplayName("N˙mero")]
+        [DisplayName("N√∫mero")]
         public string Numero { get; set; }
 
-        [DisplayName("Imagem do Projeto")]
-        public byte[] Imagem { get; set; }
-        
+        [DisplayName("URL da Imagem do Projeto")]
+        public string UrlImagem { get; set; }
+
         public string Rua { get; set; }
         
         public string Bairro { get; set; }
@@ -48,6 +48,6 @@ namespace ComCity.Models
         
         public ICollection<Enquete> Enquetes {get;set;}
         
-        public Area Area { get; set; }
+        public Area Area { get; set; }       
     }
 }

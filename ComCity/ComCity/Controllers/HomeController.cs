@@ -27,7 +27,10 @@ namespace ComCity.Controllers
 
             var projetos = await db.Projetos
                 .Include(a => a.Area)
-                .Where(a => a.Descricao.ToLower().Contains(search) || a.Nome.ToLower().Contains(search))
+                .Where(a => 
+                    a.Nome.ToLower().Contains(search) ||
+                    a.Bairro.ToLower().Contains(search)
+                ) 
                 .ToListAsync();
 
             return View(projetos);
