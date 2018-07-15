@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Feedback>
+@{
+    ViewData["Title"] = "Relatorio";
+}
+
+<h2>Relatorio</h2>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            <legend>Enquetes</legend>
+            @if (Model != null)
+            {
+                <p>Total de votos positivos: @Model.Count(model => model.Positivo)</p>
+                <p>Total de votos negativos: @Model.Count(model => model.Positivo == false)</p>
+            }
+        </fieldset>
+    </div>
+</div>
+

@@ -91,5 +91,22 @@ namespace ComCity.Controllers
 
             return View(feedback);
         }
+<<<<<<< HEAD
+=======
+
+       
+
+        private bool FeedbackExists(int id)
+        {
+            return _context.Feedbacks.Any(e => e.Id == id);
+        }
+
+        public IActionResult EmitirRelatorio()
+        {
+            var respostas = _context.Feedbacks.ToList();
+            return View(respostas);
+        }
+
+>>>>>>> f9181f673205f81bec8ec258f54f29f558d41129
     }
 }
