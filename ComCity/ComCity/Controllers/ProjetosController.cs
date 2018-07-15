@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ComCity.Data;
 using ComCity.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ComCity.Controllers
 {
@@ -16,13 +19,11 @@ namespace ComCity.Controllers
             _context = context;
         }
 
-        // GET: Projetos
         public async Task<IActionResult> Index()
         {
             return View(await _context.Projetos.ToListAsync());
         }
 
-        // GET: Projetos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,29 +41,40 @@ namespace ComCity.Controllers
             return View(projeto);
         }
 
-        // GET: Projetos/Create
         public IActionResult Create()
         {
+            ViewBag.AreaId = new SelectList(_context.Areas.ToList(), "Id", "Descricao");
             return View();
         }
 
-        // POST: Projetos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Descricao,Valor,PrevisaoDeInicio,PrevisaoDeConclusao,CEP,Numero,Rua,Bairro,Cidade,Estado,Situacao")] Projeto projeto)
+        public async Task<IActionResult> Create(Projeto projeto)
         {
             if (ModelState.IsValid)
             {
+                var filePath = Path.GetTempFileName();
+                foreach (var formFile in Request.Form.Files)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        using (var inputStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            // read file to stream
+                            await formFile.CopyToAsync(inputStream);
+                            // stream to byte array
+                            projeto.Imagem = new byte[inputStream.Length];
+                        }
+                    }
+                }
                 _context.Add(projeto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Areas = new SelectList(_context.Areas.ToList(), "Id", "Descricao", projeto.AreaId);
             return View(projeto);
         }
 
-        // GET: Projetos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,15 +87,13 @@ namespace ComCity.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Areas = new SelectList(_context.Areas.ToList(), "Id", "Descricao", projeto.AreaId);
             return View(projeto);
         }
 
-        // POST: Projetos/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Descricao,Valor,PrevisaoDeInicio,PrevisaoDeConclusao,CEP,Numero,Rua,Bairro,Cidade,Estado,Situacao")] Projeto projeto)
+        public async Task<IActionResult> Edit(int id, Projeto projeto)
         {
             if (id != projeto.Id)
             {
@@ -94,6 +104,20 @@ namespace ComCity.Controllers
             {
                 try
                 {
+                    var filePath = Path.GetTempFileName();
+                    foreach (var formFile in Request.Form.Files)
+                    {
+                        if (formFile.Length > 0)
+                        {
+                            using (var inputStream = new FileStream(filePath, FileMode.Create))
+                            {
+                                // read file to stream
+                                await formFile.CopyToAsync(inputStream);
+                                // stream to byte array
+                                projeto.Imagem = new byte[inputStream.Length];
+                            }
+                        }
+                    }
                     _context.Update(projeto);
                     await _context.SaveChangesAsync();
                 }
@@ -110,10 +134,10 @@ namespace ComCity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Areas = new SelectList(_context.Areas.ToList(), "Id", "Descricao", projeto.AreaId);
             return View(projeto);
         }
 
-        // GET: Projetos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,7 +155,6 @@ namespace ComCity.Controllers
             return View(projeto);
         }
 
-        // POST: Projetos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
