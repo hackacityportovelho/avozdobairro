@@ -9,11 +9,13 @@ namespace ComCity.Models
         public int EnqueteId { get; set; }
         public bool Aprovado { get; set; }
         
-        [EmailAddress]
+        [Required(ErrorMessage="Campo Obrigatório"), EmailAddress, Display(Name="Qual seu Email?")]
         public string Email { get; set; }
 
+        [Display(Name = "Alguma Observação?")]
         public string Observacao { get; set; }
 
+        [Display(Name = "Por quê?")]
         public string Justificativa { get; set; }
         
         public Enquete Enquete { get; set; }
