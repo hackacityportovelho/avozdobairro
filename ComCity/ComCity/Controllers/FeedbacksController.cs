@@ -40,111 +40,56 @@ namespace ComCity.Controllers
             return View(feedback);
         }
 
-        // GET: Feedbacks/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Sim(int EnqueteId)
         {
+            var Enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == EnqueteId);
+            ViewBag.Enquete = Enquete;
+
             return View();
         }
 
-        // POST: Feedbacks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Positivo,Observacao,Justificativa")] Feedback feedback)
+        public async Task<IActionResult> Sim(Feedback feedback)
         {
             if (ModelState.IsValid)
             {
+                feedback.Aprovado = true;
                 _context.Add(feedback);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var Enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == feedback.EnqueteId);
+            ViewBag.Enquete = Enquete;
+
             return View(feedback);
         }
 
-        // GET: Feedbacks/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Nao(int EnqueteId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var Enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == EnqueteId);
+            ViewBag.Enquete = Enquete;
 
-            var feedback = await _context.Feedbacks.SingleOrDefaultAsync(m => m.Id == id);
-            if (feedback == null)
-            {
-                return NotFound();
-            }
-            return View(feedback);
+            return View();
         }
 
-        // POST: Feedbacks/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Positivo,Observacao,Justificativa")] Feedback feedback)
+        public async Task<IActionResult> Nao(Feedback feedback)
         {
-            if (id != feedback.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(feedback);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FeedbackExists(feedback.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                feedback.Aprovado = false;
+                _context.Add(feedback);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(feedback);
-        }
 
-        // GET: Feedbacks/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var feedback = await _context.Feedbacks
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (feedback == null)
-            {
-                return NotFound();
-            }
+            var Enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == feedback.EnqueteId);
+            ViewBag.Enquete = Enquete;
 
             return View(feedback);
-        }
-
-        // POST: Feedbacks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var feedback = await _context.Feedbacks.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Feedbacks.Remove(feedback);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool FeedbackExists(int id)
-        {
-            return _context.Feedbacks.Any(e => e.Id == id);
         }
     }
 }

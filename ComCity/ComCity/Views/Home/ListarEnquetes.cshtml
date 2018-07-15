@@ -92,14 +92,18 @@
 
             @foreach (var item in Model.Enquetes)
             {
-                <p>@item.Descricao</p>
+                <p>
+                    @item.Descricao
+                    <a asp-action="Sim" asp-controller="Feedbacks" asp-route-EnqueteId="@item.Id"> Sim </a>
+                    <a asp-action="Nao" asp-controller="Feedbacks" asp-route-EnqueteId="@item.Id"> Não </a>
+                </p>
+
             }
+
         </fieldset>
     </div>
 </div>
 
-<div>
-</div>
 <div>
     <a asp-action="Index">De volta a lista</a>
 </div>

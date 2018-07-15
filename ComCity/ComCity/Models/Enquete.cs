@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ComCity.Models
@@ -12,7 +12,7 @@ namespace ComCity.Models
         [DisplayName("Projeto")]
         public int ProjetoId { get; set; }
 
-        [DisplayName("Descrição")]
+        [DisplayName("DescriÃ§Ã£o")]
         public string Descricao { get; set; }
 
         [ScaffoldColumn(false)]
