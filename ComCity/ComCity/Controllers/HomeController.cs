@@ -46,5 +46,22 @@ namespace ComCity.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public async Task<IActionResult> ListarEnquetes(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var projeto = await db.Projetos.Include(t => t.Enquetes)
+                .SingleOrDefaultAsync(m => m.Id == id);
+            if (projeto == null)
+            {
+                return NotFound();
+            }
+
+            return View(projeto);
+        }
     }
 }
