@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ComCity.Models;
 
@@ -17,7 +13,11 @@ namespace ComCity.Data
         }
 
         public DbSet<Modelo> Modelos { get; set; }
-
+        public DbSet<Projeto> Projetos { get; set; }
+        public DbSet<Enquete> Enquetes { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Area> Areas { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
