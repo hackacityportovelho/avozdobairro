@@ -5,6 +5,5 @@ namespace ComCity.Models
         Planejado,
         EmExecucao,
         Concluido
-
     }
 }
