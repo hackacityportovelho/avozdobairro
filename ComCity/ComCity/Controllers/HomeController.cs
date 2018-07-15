@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ComCity.Models;
 using ComCity.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace ComCity.Controllers
@@ -25,15 +27,16 @@ namespace ComCity.Controllers
 
             var projetos = await db.Projetos
                 .Include(a => a.Area)
-                .Where(a => a.Descricao.ToLower().Contains(search))
+                .Where(a => a.Descricao.ToLower().Contains(search) || a.Nome.ToLower().Contains(search))
                 .ToListAsync();
 
             return View(projetos);
         }
 
+        [Authorize]
         public IActionResult Admin()
         {
-            return RedirectToAction("Login","Account");
+            return View();
         }
 
         public IActionResult Error()
