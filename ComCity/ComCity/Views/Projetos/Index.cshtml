@@ -11,37 +11,13 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
+        <tr>                
                 <th>
-                    @Html.DisplayNameFor(model => model.Descricao)
+                    @Html.DisplayNameFor(model => model.Nome)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Valor)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PrevisaoDeInicio)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PrevisaoDeConclusao)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CEP)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Numero)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rua)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Bairro)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cidade)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Estado)
-                </th>
+                </th>                
                 <th>
                     @Html.DisplayNameFor(model => model.Situacao)
                 </th>
@@ -52,35 +28,12 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
+                @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Valor)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrevisaoDeInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrevisaoDeConclusao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CEP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bairro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Situacao)
             </td>

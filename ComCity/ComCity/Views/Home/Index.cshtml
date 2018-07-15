@@ -19,21 +19,25 @@
     </div>
 </div>
 
+<hr/>
 
-@foreach(var projeto in Model)
-{
-    <div class="card">    
-        <img src="https://www.w3schools.com/w3css/img_snowtops.jpg" alt="Norway">
-        <div class="container">
-            <h4>
-                <strong>
-                    <a asp-action="Details" asp-controller="Projetos">         
-                        Nome do Projeto
-                    </a>
-                </strong> 
-                 </h4> 
-            <p> @projeto.Situacao </p>             
+<div class="row">
+    @foreach(var projeto in Model)  
+    {
+        <div class="col-md-3">
+             <a asp-action="Details" asp-controller="Projetos" asp-route-id="@projeto.Id">         
+
+            <div class="card">    
+                <img src="@projeto.UrlImagem" alt="@projeto.Nome" class="imagem-painel">
+                <div class="container">
+                    <h4>
+                        <strong> @projeto.Nome </strong> 
+                    </h4> 
+                    <p> Bairro @projeto.Bairro </p>
+                </div>
+            </div>
+            </a>
         </div>
-    </div>
 
-}
+    }
+</div>

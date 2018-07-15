@@ -39,3 +39,5 @@ packages
 *.ide
 [Ss]erver/
 sqlite3/
+ComCity/ComCity/tambaqui.db
+ComCity/ComCity/Migrations

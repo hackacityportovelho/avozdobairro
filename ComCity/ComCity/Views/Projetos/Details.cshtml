@@ -83,6 +83,9 @@
             @Html.DisplayFor(model => model.Situacao)
         </dd>
     </dl>
+    
+        <img style="width:400px;" src="@Model.UrlImagem">
+    
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |

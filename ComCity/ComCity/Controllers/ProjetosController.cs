@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ComCity.Data;
 using ComCity.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ComCity.Data;
 
 namespace ComCity.Controllers
 {
@@ -21,7 +19,10 @@ namespace ComCity.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Projetos.ToListAsync());
+            var lista = await _context.Projetos
+            .ToListAsync();
+            
+            return View(lista);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -41,10 +42,16 @@ namespace ComCity.Controllers
             return View(projeto);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.AreaId = new SelectList(_context.Areas.ToList(), "Id", "Descricao");
+            await CarregarViewBags();
             return View();
+        }
+
+        public async Task CarregarViewBags()
+        {
+            var lista = await _context.Areas.ToListAsync();
+            ViewBag.AreaId = new SelectList(lista, "Id", "Descricao");
         }
 
         [HttpPost]
@@ -52,26 +59,12 @@ namespace ComCity.Controllers
         public async Task<IActionResult> Create(Projeto projeto)
         {
             if (ModelState.IsValid)
-            {
-                var filePath = Path.GetTempFileName();
-                foreach (var formFile in Request.Form.Files)
-                {
-                    if (formFile.Length > 0)
-                    {
-                        using (var inputStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            // read file to stream
-                            await formFile.CopyToAsync(inputStream);
-                            // stream to byte array
-                            projeto.Imagem = new byte[inputStream.Length];
-                        }
-                    }
-                }
+            {                
                 _context.Add(projeto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Areas = new SelectList(_context.Areas.ToList(), "Id", "Descricao", projeto.AreaId);
+            await CarregarViewBags();
             return View(projeto);
         }
 
@@ -87,7 +80,7 @@ namespace ComCity.Controllers
             {
                 return NotFound();
             }
-            ViewBag.Areas = new SelectList(_context.Areas.ToList(), "Id", "Descricao", projeto.AreaId);
+            await CarregarViewBags();
             return View(projeto);
         }
 
@@ -103,21 +96,7 @@ namespace ComCity.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    var filePath = Path.GetTempFileName();
-                    foreach (var formFile in Request.Form.Files)
-                    {
-                        if (formFile.Length > 0)
-                        {
-                            using (var inputStream = new FileStream(filePath, FileMode.Create))
-                            {
-                                // read file to stream
-                                await formFile.CopyToAsync(inputStream);
-                                // stream to byte array
-                                projeto.Imagem = new byte[inputStream.Length];
-                            }
-                        }
-                    }
+                {                   
                     _context.Update(projeto);
                     await _context.SaveChangesAsync();
                 }
@@ -134,7 +113,7 @@ namespace ComCity.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Areas = new SelectList(_context.Areas.ToList(), "Id", "Descricao", projeto.AreaId);
+            await CarregarViewBags();
             return View(projeto);
         }
 

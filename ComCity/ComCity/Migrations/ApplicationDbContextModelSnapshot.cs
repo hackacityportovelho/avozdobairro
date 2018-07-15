@@ -149,8 +149,6 @@ namespace ComCity.Migrations
 
                     b.Property<string>("Estado");
 
-                    b.Property<byte[]>("Imagem");
-
                     b.Property<string>("Nome");
 
                     b.Property<string>("Numero");
@@ -163,7 +161,9 @@ namespace ComCity.Migrations
 
                     b.Property<int>("Situacao");
 
-                    b.Property<decimal>("Valor");
+                    b.Property<string>("UrlImagem");
+
+                    b.Property<decimal?>("Valor");
 
                     b.HasKey("Id");
 
