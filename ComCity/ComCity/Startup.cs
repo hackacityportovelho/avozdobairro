@@ -29,6 +29,15 @@ namespace ComCity
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(x =>
+            {
+                x.Password.RequiredLength = 6;
+                x.Password.RequireNonAlphanumeric = false;
+                x.Password.RequireDigit = false;
+                x.Password.RequireUppercase = false;
+                x.Password.RequireLowercase = false;                
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 

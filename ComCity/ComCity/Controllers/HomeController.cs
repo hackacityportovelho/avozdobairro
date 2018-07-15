@@ -5,28 +5,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ComCity.Models;
+using ComCity.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComCity.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext db;
+
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            db = context;
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Index(string search = "")
         {
-            ViewData["Message"] = "Your application description page.";
+            search = (search is null ? "" : search.ToLower()); 
 
-            return View();
+            var projetos = await db.Projetos
+                .Include(a => a.Area)
+                .Where(a => a.Descricao.ToLower().Contains(search))
+                .ToListAsync();
+
+            return View(projetos);
         }
 
-        public IActionResult Contact()
+        public IActionResult Admin()
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            return RedirectToAction("Login","Account");
         }
 
         public IActionResult Error()
