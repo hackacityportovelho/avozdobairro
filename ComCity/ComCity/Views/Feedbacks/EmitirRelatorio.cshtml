@@ -12,8 +12,8 @@
             <legend>Enquetes</legend>
             @if (Model != null)
             {
-                <p>Total de votos positivos: @Model.Count(model => model.Positivo)</p>
-                <p>Total de votos negativos: @Model.Count(model => model.Positivo == false)</p>
+                <p>Total de votos positivos: @Model.Count(model => model.Aprovado)</p>
+                <p>Total de votos negativos: @Model.Count(model => model.Aprovado == false)</p>
             }
         </fieldset>
     </div>

@@ -57,7 +57,8 @@ namespace ComCity.Controllers
                 feedback.Aprovado = true;
                 _context.Add(feedback);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == feedback.EnqueteId);
+                return RedirectToAction("ListarEnquetes","Home", new{id = enquete.ProjetoId});
             }
 
             var Enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == feedback.EnqueteId);
@@ -83,7 +84,8 @@ namespace ComCity.Controllers
                 feedback.Aprovado = false;
                 _context.Add(feedback);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == feedback.EnqueteId);
+                return RedirectToAction("ListarEnquetes","Home", new{id = enquete.ProjetoId});
             }
 
             var Enquete = await _context.Enquetes.SingleOrDefaultAsync(a => a.Id == feedback.EnqueteId);
